@@ -167,6 +167,7 @@ public class Plugin extends Aware_Plugin {
                 Aware.setSetting(getApplicationContext(), Settings.API_SECRET_PLUGIN_FITBIT, "033ed2a3710c0cde04343d073c09e378");
 
             if (Aware.getSetting(getApplicationContext(), Settings.OAUTH_TOKEN).length() == 0) { //not authenticated yet
+                /* erez - commented this entire part - do nothing in this case
                 Intent fitbitAuth = new Intent(this, FitbitAuth.class);
                 fitbitAuth.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, fitbitAuth, PendingIntent.FLAG_ONE_SHOT);
@@ -190,11 +191,16 @@ public class Plugin extends Aware_Plugin {
 
                 NotificationManager notManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 notManager.notify(FITBIT_NOTIFICATION_ID, notification);
+                */
             } else {
                 if (Plugin.fitbitAPI != null) {
                     Cursor devices = getContentResolver().query(Provider.Fitbit_Devices.CONTENT_URI, null, null, null, Provider.Fitbit_Devices.TIMESTAMP + " ASC");
                     //Ask the user to pick the Fitbit they will use if not set
-                    if (devices == null || devices.getCount() == 0) {
+                    //erez
+                    if (devices == null || devices.getCount() == 0 || Aware.getSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED).equals("true")) {
+                        Aware.setSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED, "false");
+
+                    //if (devices == null || devices.getCount() == 0) {
                         if (devicesPicker == null) {
                             devicesPicker = new FitbitDevicesPicker();
                             devicesPicker.execute();

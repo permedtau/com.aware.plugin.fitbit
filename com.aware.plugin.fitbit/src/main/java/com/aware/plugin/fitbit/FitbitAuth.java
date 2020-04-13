@@ -2,6 +2,7 @@ package com.aware.plugin.fitbit;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Browser;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,19 +18,38 @@ import org.json.JSONObject;
 
 public class FitbitAuth extends AppCompatActivity {
 
+    private boolean authorization_required = false;
+
+    //erez - added this overriden function
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (Aware.getSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED).equals("true")) {
+            authorization_required = true;
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (Plugin.fitbitOAUTHToken != null && Plugin.fitbitAPI != null) {
-            Toast.makeText(getApplicationContext(), "Authentication OK!", Toast.LENGTH_SHORT).show();
-
-            Intent fitbit = new Intent(this, Plugin.class);
-            startService(fitbit);
-
-            finish();
-        } else {
+        // erez - added this if
+        if (authorization_required) {
+            authorization_required = false;
             authorizeFitbit();
+        }
+        else {
+            if (Plugin.fitbitOAUTHToken != null && Plugin.fitbitAPI != null) {
+                Toast.makeText(getApplicationContext(), "Authentication OK!", Toast.LENGTH_SHORT).show();
+
+                Intent fitbit = new Intent(this, Plugin.class);
+                startService(fitbit);
+
+                finish();
+            } else {
+                authorizeFitbit();
+            }
         }
     }
 
@@ -46,7 +66,12 @@ public class FitbitAuth extends AppCompatActivity {
 
         Intent auth = new Intent(Intent.ACTION_VIEW);
         auth.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        auth.setData(Uri.parse(Plugin.fitbitAPI.getAuthorizationUrl()));
+
+        //erez
+        String url = Plugin.fitbitAPI.getAuthorizationUrl() + "&prompt=login%20consent";
+        auth.setData(Uri.parse(url));
+        //auth.setData(Uri.parse(Plugin.fitbitAPI.getAuthorizationUrl()));
+
         auth.putExtra(Browser.EXTRA_APPLICATION_ID, getPackageName());
         startActivity(auth);
     }

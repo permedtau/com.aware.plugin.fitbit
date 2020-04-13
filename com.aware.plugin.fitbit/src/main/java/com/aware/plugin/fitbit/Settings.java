@@ -16,6 +16,9 @@ import com.aware.ui.AppCompatPreferenceActivity;
 
 public class Settings extends AppCompatPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    //erez - added this constant
+    public static final String PREF_FITBIT_AUTHORIZATION_REQUIRED = "PREF_FITBIT_AUTHORIZATION_REQUIRED";
+
     //Plugin settings in XML @xml/preferences_fitbit
     public static final String STATUS_PLUGIN_FITBIT = "status_plugin_fitbit";
     public static final String UNITS_PLUGIN_FITBIT = "units_plugin_fitbit";
