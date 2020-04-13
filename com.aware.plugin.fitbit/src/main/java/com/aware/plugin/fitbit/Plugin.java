@@ -196,11 +196,12 @@ public class Plugin extends Aware_Plugin {
                 if (Plugin.fitbitAPI != null) {
                     Cursor devices = getContentResolver().query(Provider.Fitbit_Devices.CONTENT_URI, null, null, null, Provider.Fitbit_Devices.TIMESTAMP + " ASC");
                     //Ask the user to pick the Fitbit they will use if not set
-                    //erez
+
+                    //erez - replaced the if row and added the setting row
                     if (devices == null || devices.getCount() == 0 || Aware.getSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED).equals("true")) {
                         Aware.setSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED, "false");
-
                     //if (devices == null || devices.getCount() == 0) {
+
                         if (devicesPicker == null) {
                             devicesPicker = new FitbitDevicesPicker();
                             devicesPicker.execute();
