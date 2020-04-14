@@ -198,14 +198,19 @@ public class Plugin extends Aware_Plugin {
                     //Ask the user to pick the Fitbit they will use if not set
 
                     //erez - replaced the if row and added the setting row
-                    if (devices == null || devices.getCount() == 0 || Aware.getSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED).equals("true")) {
-                        Aware.setSetting(getApplicationContext(), Settings.PREF_FITBIT_AUTHORIZATION_REQUIRED, "false");
-                    //if (devices == null || devices.getCount() == 0) {
+                    if (Aware.getSetting(getApplicationContext(), Settings.PREF_DEVICE_PICKER_REQUIRED).equals("true")) {
+                        Aware.setSetting(getApplicationContext(), Settings.PREF_DEVICE_PICKER_REQUIRED, "false");
 
+                        devicesPicker = new FitbitDevicesPicker();
+                        devicesPicker.execute();
+                    } else if (devices == null || devices.getCount() == 0) {
+                    /*
+                    if (devices == null || devices.getCount() == 0) {
                         if (devicesPicker == null) {
                             devicesPicker = new FitbitDevicesPicker();
                             devicesPicker.execute();
                         }
+                     */
                     } else {
                         if (intent != null && intent.getAction() != null && intent.getAction().equalsIgnoreCase(ACTION_AWARE_PLUGIN_FITBIT_SYNC)) {
                             new FibitDataSync().execute();

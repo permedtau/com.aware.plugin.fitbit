@@ -18,6 +18,7 @@ public class Settings extends AppCompatPreferenceActivity implements SharedPrefe
 
     //erez - added this constant
     public static final String PREF_FITBIT_AUTHORIZATION_REQUIRED = "PREF_FITBIT_AUTHORIZATION_REQUIRED";
+    public static final String PREF_DEVICE_PICKER_REQUIRED = "PREF_DEVICE_PICKER_REQUIRED";
 
     //Plugin settings in XML @xml/preferences_fitbit
     public static final String STATUS_PLUGIN_FITBIT = "status_plugin_fitbit";

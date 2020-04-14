@@ -28,7 +28,7 @@ public class DevicePicker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.device_picker);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         LinearLayout device_container = (LinearLayout) findViewById(R.id.device_picker);
 
