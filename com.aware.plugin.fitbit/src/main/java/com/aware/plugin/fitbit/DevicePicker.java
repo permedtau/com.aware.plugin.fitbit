@@ -98,6 +98,8 @@ public class DevicePicker extends AppCompatActivity {
 
                             Plugin.devicesPicker = null;
 
+                            Toast.makeText(getApplicationContext(), "Connected to Fitbit!", Toast.LENGTH_SHORT).show();
+
                             finish();
                         }
                     });

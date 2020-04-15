@@ -37,7 +37,7 @@ public class FitbitAuth extends AppCompatActivity {
         }
         else {
             if (Plugin.fitbitOAUTHToken != null && Plugin.fitbitAPI != null) {
-                Toast.makeText(getApplicationContext(), "Connection to Fitbit succeeded!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication to Fitbit succeeded!", Toast.LENGTH_SHORT).show();
 
                 //erez
                 Aware.setSetting(getApplicationContext(), Settings.PREF_DEVICE_PICKER_REQUIRED, "true");
@@ -47,7 +47,7 @@ public class FitbitAuth extends AppCompatActivity {
 
                 finish();
             } else {
-                Toast.makeText(getApplicationContext(), "Connection to Fitbit failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication to Fitbit failed!", Toast.LENGTH_SHORT).show();
 
                 finish();
             }
