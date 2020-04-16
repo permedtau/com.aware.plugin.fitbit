@@ -3,6 +3,7 @@ package com.aware.plugin.fitbit;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Browser;
 import android.widget.Toast;
@@ -65,28 +66,20 @@ public class FitbitAuth extends AppCompatActivity {
                 .apiSecret(Aware.getSetting(getApplicationContext(), Settings.API_SECRET_PLUGIN_FITBIT))
                 .build(FitbitAPI.instance());
 
-        /*
-        Intent auth = new Intent(Intent.ACTION_VIEW);
-        auth.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        //erez
-        //String url = Plugin.fitbitAPI.getAuthorizationUrl() + "&prompt=login%20consent";
-        String url = Plugin.fitbitAPI.getAuthorizationUrl() + "&prompt=consent";
-        auth.setData(Uri.parse(url));
-        //auth.setData(Uri.parse(Plugin.fitbitAPI.getAuthorizationUrl()));
-
-        auth.putExtra(Browser.EXTRA_APPLICATION_ID, getPackageName());
-
-        startActivity(auth);
-        */
-
-
         String url = Plugin.fitbitAPI.getAuthorizationUrl() + "&prompt=login%20consent";
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        //builder.setToolbarColor(Color.BLUE);
-        //builder.setToolbarColor(0xff33b5e5);
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(this, Uri.parse(url));
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(this, Uri.parse(url));
+//        }
+//        else {
+//            Intent auth = new Intent(Intent.ACTION_VIEW);
+//            auth.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            auth.setData(Uri.parse(url));
+//            auth.putExtra(Browser.EXTRA_APPLICATION_ID, getPackageName());
+//            startActivity(auth);
+//        }
     }
 
 
