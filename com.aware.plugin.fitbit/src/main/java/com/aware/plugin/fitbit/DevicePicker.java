@@ -88,17 +88,19 @@ public class DevicePicker extends AppCompatActivity {
                                 device.put(Provider.Fitbit_Devices.LAST_SYNC, selected.getString("lastSyncTime"));
                                 getContentResolver().insert(Provider.Fitbit_Devices.CONTENT_URI, device);
 
+                                Toast.makeText(getApplicationContext(), "Connected to a Fitbit device!", Toast.LENGTH_SHORT).show();
+
                                 Intent startSync = new Intent(getApplicationContext(), Plugin.class);
                                 startSync.setAction(Plugin.ACTION_AWARE_PLUGIN_FITBIT_SYNC);
                                 startService(startSync);
 
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
+
+                                Toast.makeText(getApplicationContext(), "Failed to select a Fitbit device!", Toast.LENGTH_SHORT).show();
                             }
 
                             Plugin.devicesPicker = null;
-
-                            Toast.makeText(getApplicationContext(), "Connected to Fitbit!", Toast.LENGTH_SHORT).show();
 
                             finish();
                         }

@@ -68,18 +68,18 @@ public class FitbitAuth extends AppCompatActivity {
 
         String url = Plugin.fitbitAPI.getAuthorizationUrl() + "&prompt=login%20consent";
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
             CustomTabsIntent customTabsIntent = builder.build();
             customTabsIntent.launchUrl(this, Uri.parse(url));
-        }
-        else {
-            Intent auth = new Intent(Intent.ACTION_VIEW);
-            auth.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            auth.setData(Uri.parse(url));
-            auth.putExtra(Browser.EXTRA_APPLICATION_ID, getPackageName());
-            startActivity(auth);
-        }
+//        }
+//        else {
+//            Intent auth = new Intent(Intent.ACTION_VIEW);
+//            auth.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            auth.setData(Uri.parse(url));
+//            auth.putExtra(Browser.EXTRA_APPLICATION_ID, getPackageName());
+//            startActivity(auth);
+//        }
     }
 
 
