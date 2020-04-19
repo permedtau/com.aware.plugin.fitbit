@@ -1,9 +1,9 @@
 package com.aware.plugin.fitbit;
 
-import android.content.ContentResolver;
+//import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SyncRequest;
+//import android.content.SyncRequest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -93,19 +93,20 @@ public class DevicePicker extends AppCompatActivity {
 
                                 Toast.makeText(getApplicationContext(), "Connected to a Fitbit device!", Toast.LENGTH_SHORT).show();
 
+                                Aware.setSetting(getApplicationContext(), Settings.PREF_FITBIT_ID_CHANGED, "true");
 
                                 Intent startSync = new Intent(getApplicationContext(), Plugin.class);
                                 startSync.setAction(Plugin.ACTION_AWARE_PLUGIN_FITBIT_SYNC);
                                 startService(startSync);
 
 
-                                ContentResolver.setIsSyncable(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()), 1);
-                                ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()), true);
-                                SyncRequest request = new SyncRequest.Builder()
-                                    .syncOnce()
-                                    .setSyncAdapter(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()))
-                                    .setExtras(new Bundle()).build();
-                                ContentResolver.requestSync(request);
+//                                ContentResolver.setIsSyncable(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()), 1);
+//                                ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()), true);
+//                                SyncRequest request = new SyncRequest.Builder()
+//                                    .syncOnce()
+//                                    .setSyncAdapter(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()))
+//                                    .setExtras(new Bundle()).build();
+//                                ContentResolver.requestSync(request);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
