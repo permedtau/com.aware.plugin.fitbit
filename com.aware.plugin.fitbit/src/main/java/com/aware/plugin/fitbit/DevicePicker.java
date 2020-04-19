@@ -1,10 +1,11 @@
 package com.aware.plugin.fitbit;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SyncRequest;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.aware.Aware;
@@ -88,11 +89,23 @@ public class DevicePicker extends AppCompatActivity {
                                 device.put(Provider.Fitbit_Devices.LAST_SYNC, selected.getString("lastSyncTime"));
                                 getContentResolver().insert(Provider.Fitbit_Devices.CONTENT_URI, device);
 
+
+
                                 Toast.makeText(getApplicationContext(), "Connected to a Fitbit device!", Toast.LENGTH_SHORT).show();
+
 
                                 Intent startSync = new Intent(getApplicationContext(), Plugin.class);
                                 startSync.setAction(Plugin.ACTION_AWARE_PLUGIN_FITBIT_SYNC);
                                 startService(startSync);
+
+
+                                ContentResolver.setIsSyncable(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()), 1);
+                                ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()), true);
+                                SyncRequest request = new SyncRequest.Builder()
+                                    .syncOnce()
+                                    .setSyncAdapter(Aware.getAWAREAccount(getApplicationContext()), Provider.getAuthority(getApplicationContext()))
+                                    .setExtras(new Bundle()).build();
+                                ContentResolver.requestSync(request);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
